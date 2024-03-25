@@ -21,7 +21,7 @@ public class MovieManagerTest {
     MovieItem item7 = new MovieItem(7, "Номер один", "комедия", 7);
 
     @Test
-    public void test() {
+    public void testSaveMany() {
         MovieManager repo = new MovieManager();
         repo.save(item1);
         repo.save(item2);
@@ -37,13 +37,21 @@ public class MovieManagerTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void testSaveNothing() {
+        MovieManager repo = new MovieManager();
+        MovieItem[] expected = {};
+        MovieItem[] actual = repo.findAll();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
     //MovieManager repo = Mockito.mock(MovieManager.class);
 
     @Test
-    public void shouldFindLast() {
-//        MovieManager manager = new MovieManager(5);
-//        MovieItem[] items = {item1, item2, item3, item4, item5, item6, item7};
-        MovieManager repo = new MovieManager();
+    public void shouldFindLastFive() {
+
+        MovieManager repo = new MovieManager(5);
         repo.save(item1);
         repo.save(item2);
         repo.save(item3);
@@ -56,5 +64,37 @@ public class MovieManagerTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldFindLastUnderLimit() {
+
+        MovieManager repo = new MovieManager(5);
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.save(item4);
+
+        MovieItem[] expected = {item4, item3, item2, item1};
+        MovieItem[] actual = repo.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindLastAboveFive() {
+        MovieManager repo = new MovieManager(6);
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.save(item4);
+        repo.save(item5);
+        repo.save(item6);
+        repo.save(item7);
+        MovieItem[] expected = {item7, item6, item5, item4, item3, item2};
+        MovieItem[] actual = repo.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
 }
 

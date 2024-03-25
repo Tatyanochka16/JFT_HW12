@@ -2,12 +2,15 @@ package ru.netology;
 
 public class MovieManager {
     private MovieItem[] items = new MovieItem[0];
-    public MovieManager(){
+
+    public MovieManager() {
 
     }
+
     int limit;
+
     public MovieManager(int limit) {
-        this.limit=limit;
+        this.limit = limit;
     }
 
     public void save(MovieItem item) {
